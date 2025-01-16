@@ -1,0 +1,49 @@
+snippet cmake_pico
+cmake_minimum_required(VERSION 3.20)
+include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
+project(<PROJECT_NAME_HERE>
+				LANGUAGES C CXX ASM)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+pico_sdk_init()
+
+file(GLOB_RECURSE MAIN_SRC_FILES src/*.cpp)
+
+add_executable(${PROJECT_NAME}
+	${MAIN_SRC_FILES}
+)
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+	include
+)
+
+target_link_libraries(${PROJECT_NAME}
+	pico_stdlib
+	pico_multicore
+	hardware_gpio
+	hardware_spi
+	hardware_i2c
+	hardware_adc
+)
+
+pico_enable_stdio_usb(${PROJECT_NAME} 1)
+pico_enable_stdio_uart(${PROJECT_NAME} 0)
+pico_add_extra_outputs(${PROJECT_NAME})
+endsnippet
+
+snippet cmake_stm32_added_code
+#-----------------------------------------------------------------------------------------------------
+# Convert output to hex and binary
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${CMAKE_PROJECT_NAME}.hex
+)
+
+# Convert to bin file -> add conditional check?
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${CMAKE_PROJECT_NAME}.bin
+)
+endsnippet
+

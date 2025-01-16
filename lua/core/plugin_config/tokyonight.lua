@@ -1,0 +1,12 @@
+-- vim.api.nvim_set_hl(0, 'LineNr', { fg='#adadad' })
+-- require("tokyonight").setup({
+--   on_colors = function (colors)
+--     colors.fg_gutter = "#aaaaaa"
+--   end
+-- })
+--
+-- require("tokyonight").setup {
+--   on_colors = function(colors)
+--     vim.api.nvim_set_hl(0, 'LineNr', { fg='#adadad' })
+--   end,
+-- }

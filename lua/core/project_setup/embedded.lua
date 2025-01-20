@@ -176,12 +176,14 @@ local function upload_stm32()
 end
 
 -- ---- ESPRESSIF IDF --------------------------------------------------------------------------------------------------------------
+vim.g.ESP_IDF_TERMINAL_DIRECCTORY = "D:/Software/Espressif/frameworks/esp-idf-v5.3.2/export.bat"
+
 local function create_esp_project(directory)
   local project_name = vim.fn.input "Project name: "
   local esp_chip = vim.fn.input "Select chip: "
 
   local command1 = "D:"
-  local command2 = "D:/Software/Espressif/frameworks/esp-idf-v5.3.1/export.bat"
+  local command2 = vim.g.ESP_IDF_TERMINAL_DIRECCTORY
   local command3 = "cd "..directory
   local command4 = "idf.py create-project "..project_name
   local command5 = "cd ".. project_name
@@ -215,13 +217,23 @@ local function run_idf()
   if vim.g.project_type ~= 'esp_idf' then return end
 
   local project_path = vim.fn.expand("%:p:h:h")
-  local command1 = "D:/Software/Espressif/frameworks/esp-idf-v5.3.1/export.bat"
+  local command1 = vim.g.ESP_IDF_TERMINAL_DIRECCTORY
   local command2 = "cd "..project_path
   local command3 = "D:"
 
   local full_cmd = command1.."&&"..command2.."&&"..command3
   vim.cmd(string.format("FloatermNew!  --name=%s --width=0.7 --height=0.7 %s", vim.g.project_type, full_cmd))
-  -- vim.cmd("FloatermSend --name=esp_idf "..full_cmd)
+end
+
+local function is_idf_terminal_runned()
+  local floaterms = vim.fn['floaterm#buflist#gather']()
+  for _, floaterm in ipairs(floaterms) do
+    local floaterm_name = vim.api.nvim_buf_get_var(floaterm, 'floaterm_name')
+    if floaterm_name == vim.g.project_type then
+      return true
+    end
+  end
+  return false
 end
 
 local function config_esp_idf() --currently configuring the port number
@@ -232,23 +244,39 @@ local function config_esp_idf() --currently configuring the port number
 end
 
 local function build_esp_idf()
-  local full_cmd = "idf.py build"
-  vim.cmd("w | FloatermSend --name=esp_idf "..full_cmd)
-  vim.cmd("FloatermToggle esp_idf")
+  if is_idf_terminal_runned() then
+    local full_cmd = "idf.py build"
+    vim.cmd("w | FloatermSend --name=esp_idf "..full_cmd)
+    vim.cmd("FloatermToggle esp_idf")
+  else
+    local project_path = vim.fn.expand("%:p:h:h")
+    local command1 = vim.g.ESP_IDF_TERMINAL_DIRECCTORY
+    local command2 = "cd "..project_path
+    local command3 = "D:"
+    local command4 = "idf.py build"
+
+    local full_cmd = command1.."&&"..command2.."&&"..command3.."&&"..command4
+    vim.cmd(string.format("FloatermNew!  --name=%s --width=0.7 --height=0.7 %s", vim.g.project_type, full_cmd))
+  end
 end
 
 local function upload_esp_idf()
-  local command1 = "idf.py build", command2
-  
-  if vim.g.com_number then
-    command2 = string.format("idf.py -p COM%s flash", vim.g.com_number)
+  if is_idf_terminal_runned() then
+    local full_cmd = "idf.py flash"
+    if vim.g.com_number then full_cmd = full_cmd .. string.format(" -p COM%s", vim.g.com_number) end
+    vim.cmd("w | FloatermSend --name=esp_idf "..full_cmd)
+    vim.cmd("FloatermToggle esp_idf")
   else
-    command2 = string.format("idf.py flash")
-  end
+    local project_path = vim.fn.expand("%:p:h:h")
+    local command1 = vim.g.ESP_IDF_TERMINAL_DIRECCTORY
+    local command2 = "cd "..project_path
+    local command3 = "D:"
+    local command4 = "idf.py flash"
+    if vim.g.com_number then command4 = command4 .. string.format(" -p COM%s", vim.g.com_number) end
 
-  local full_cmd = command1.."&&"..command2
-  vim.cmd("w | FloatermSend --name=esp_idf "..full_cmd)
-  vim.cmd("FloatermToggle esp_idf")
+    local full_cmd = command1.."&&"..command2.."&&"..command3.."&&"..command4
+    vim.cmd(string.format("FloatermNew!  --name=%s --width=0.7 --height=0.7 %s", vim.g.project_type, full_cmd))
+  end
 end
 
 -- -----------------------------------------------------------------------------------------------------------------------

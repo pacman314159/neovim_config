@@ -33,6 +33,9 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = tr
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
+vim.keymap.set("n", "<A-j>", "<C-e>", {desc = "Curl window down", remap = true})
+vim.keymap.set("n", "<A-k>", "<C-y>", {desc = "Curl window up", remap = true})
+
 -- Move Lines
 vim.keymap.set("n", "<C-A-j>", "<cmd>m .+1<cr>==", { desc = "Move Line Down" })
 vim.keymap.set("n", "<C-A-k>", "<cmd>m .-2<cr>==", { desc = "Move Line Up" })

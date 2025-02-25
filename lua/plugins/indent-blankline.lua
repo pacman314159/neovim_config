@@ -1,3 +1,19 @@
+return {
+  "lukas-reineke/indent-blankline.nvim",
+  config = function()
+
+    require("ibl").setup {
+      scope = {
+        enabled = true
+      },
+      exclude = {
+        filetypes = {
+          "dashboard"
+        }
+      },
+    }
+  end
+}
 -- local highlight = {
 --     "RainbowRed",
 --     "RainbowYellow",
@@ -33,14 +49,3 @@
 -- }
 --
 -- hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
-
-require("ibl").setup {
-  scope = {
-    enabled = true
-  },
-  exclude = {
-    filetypes = {
-      "dashboard"
-    }
-  },
-}

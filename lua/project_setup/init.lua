@@ -1,7 +1,7 @@
 vim.g.project_type = "none"
 
-local conventional = require "core.project_setup.conventional"
-local embedded = require "core.project_setup.embedded"
+local conventional = require "project_setup.conventional"
+local embedded = require "project_setup.embedded"
 
 -- ---- COMMANDS ----------------------------------------------------------------------------------------------
 vim.api.nvim_create_user_command("SelectProjectType", function()
@@ -43,10 +43,8 @@ end, {})
 
 -- ---- KEY MAPPINGS ----------------------------------------------------------------------------------------------
 vim.keymap.set("n", "<leader>dm", function()
-  if vim.g.project_type == "arduino" then
-    embedded.check_arduino_boards() 
-  end
-end, {desc = "[D]evice [M]anager replica"})
+  vim.cmd("!devmgmt.msc")
+end, {desc = "[D]evice [M]anager"})
 
 vim.keymap.set("n", "<leader>idf", function()
   if vim.g.project_type ~= "esp_idf" then return end

@@ -27,15 +27,15 @@ opt.foldlevelstart = 99
 opt.timeoutlen = 600
 
 
--- vim.cmd[[set background=light]] vim.g.theme = 'light'
-vim.cmd[[set background=dark]] vim.g.theme = 'dark'
+vim.cmd[[set background=light]] vim.g.theme = 'light'
+-- vim.cmd[[set background=dark]] vim.g.theme = 'dark'
 
 -- vim.cmd[[colorscheme vscode]]
 -- vim.cmd([[colorscheme catppuccin-latte]])
 -- vim.cmd([[colorscheme doom-dracula]])
-vim.cmd([[colorscheme catppuccin-macchiato]])
+-- vim.cmd([[colorscheme catppuccin-macchiato]])
 -- vim.cmd[[colorscheme github_dark]]
--- vim.cmd[[colorscheme github_light]]
+vim.cmd[[colorscheme github_light]]
 -- vim.cmd[[colorscheme tokyonight]]
 -- vim.cmd[[colorscheme PaperColor]]
 -- vim.cmd[[colorscheme rose-pine-moon]]
@@ -51,6 +51,7 @@ vim.cmd([[colorscheme catppuccin-macchiato]])
 
 require("keymaps")
 require("autocmds")
+require("utils")
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

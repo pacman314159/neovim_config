@@ -84,7 +84,6 @@ vim.keymap.set("n", "<leader>m", function()
     vim.g.project_type == "arduino" or 
     vim.g.project_type == "esp_idf"
     then
-
       local full_cmd = string.format("!putty.exe -serial COM%s -sercfg %s", vim.g.com_number, vim.g.serial_baudrate)
       vim.cmd("w | "..full_cmd)
     end

@@ -5,19 +5,59 @@ local embedded = require "project_setup.embedded"
 
 -- ---- COMMANDS ----------------------------------------------------------------------------------------------
 vim.api.nvim_create_user_command("SelectProjectType", function()
-  print "Select project type [1]arduino [2]pico [3]cpp [4]python [5]stm32 [6]esp-idf"
-  local selection = vim.fn.input "Select: "
+  local project_types = {"arduino", "pico", "c", "cpp", "python", "stm32", "esp_idf"}
+  local co = coroutine.running()
+  vim.ui.select(
+    project_types,
+    {
+      prompt = "Select:",
+      format_item = function(item) return item end
+    },
+    function(choice)
+      if choice then
+        vim.g.project_type = choice
+        print("You selected:", choice)
+      else
+        print("No selection made")
+      end
+    end
+  )
+end, {})
 
-  if selection == '1' then vim.g.project_type = "arduino"
-  elseif selection == '2' then vim.g.project_type = "pico"
-  elseif selection == '3' then vim.g.project_type = "cpp"
-  elseif selection == '4' then vim.g.project_type = "python"
-  elseif selection == '5' then vim.g.project_type = 'stm32'
-  elseif selection == '6' then vim.g.project_type = 'esp_idf'
-  else
-    vim.notify("Invalid project type", vim.log.levels.ERROR)
-    vim.g.project_type = "none"
-  end
+vim.api.nvim_create_user_command("TestSelectBoard", function()
+  vim.fn.jobstart("arduino-cli board listall", {
+    stdout_buffered = true, -- Ensures output is captured as a whole
+    on_stdout = function(_, data)
+      local boards = {}
+      local board_map = {}
+
+      for i, line in ipairs(data) do
+        -- Skip empty lines and the header (first line)
+        if line ~= "" and i > 1 then
+          -- Separate Board Name and FQBN
+          local board_name, fqbn = line:match("^(.-)%s+([%w_:]+)$")
+          if board_name and fqbn then
+            table.insert(boards, board_name)
+            board_map[board_name] = fqbn
+          end
+        end
+      end
+
+      vim.ui.select(
+        boards,
+        { prompt = "Select Arduino Board:", format_item = function(item) return item end },
+        function(choice)
+          if choice then
+            local selected_fqbn = board_map[choice] -- Retrieve the FQBN
+            vim.g.selected_arduino_board = selected_fqbn -- Store the FQBN globally
+            print("Selected Arduino Board FQBN:", selected_fqbn) -- Print the selected FQBN
+          else
+            print("No board selected")
+          end
+        end
+      )
+    end,
+  })
 end, {})
 
 vim.api.nvim_create_user_command("ConfigureBoard", function()
@@ -28,9 +68,8 @@ vim.api.nvim_create_user_command("ConfigureBoard", function()
 end, {})
 
 vim.api.nvim_create_user_command("NewProject", function()
-  vim.cmd('SelectProjectType')
   if vim.g.project_type == 'none' then return end
-
+  
   local selected_directory = vim.fn.system('powershell -command "Add-Type -AssemblyName System.Windows.Forms; $dialog = New-Object System.Windows.Forms.OpenFileDialog; $dialog.InitialDirectory = \'D:\\\'; $dialog.Filter = \'Folders|`n\'; $dialog.CheckFileExists = $false; $dialog.Multiselect = $false; $dialog.Title = \'Select Folder\'; $dialog.ValidateNames = $false; $dialog.FileName = \'Folder Selection\'; if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) { $selectedPath = [System.IO.Path]::GetDirectoryName($dialog.FileName); Write-Output $selectedPath }"')
   local selected_dir = selected_directory:gsub("\n", "") -- Remove any trailing newline characters
 
@@ -75,6 +114,7 @@ vim.keymap.set("n", "<leader>u", function()
   elseif vim.g.project_type == 'stm32' then embedded.upload_stm32()
   elseif vim.g.project_type == 'esp_idf' then embedded.upload_esp_idf()
   elseif vim.g.project_type == 'cpp' then conventional.run_cpp()
+  elseif vim.g.project_type == 'c' then conventional.run_c()
   elseif vim.g.project_type == 'python' then conventional.run_python()
   end
 end, {desc = "[U]pload"})
@@ -83,9 +123,9 @@ vim.keymap.set("n", "<leader>m", function()
   if vim.g.project_type == "pico" or
     vim.g.project_type == "arduino" or 
     vim.g.project_type == "esp_idf"
-    then
-      local full_cmd = string.format("!putty.exe -serial COM%s -sercfg %s", vim.g.com_number, vim.g.serial_baudrate)
-      vim.cmd("w | "..full_cmd)
-    end
-  end, {desc = "[M]onitor outputs"})
+  then
+    local full_cmd = string.format("!putty.exe -serial COM%s -sercfg %s", vim.g.com_number, vim.g.serial_baudrate)
+    vim.cmd("w | "..full_cmd)
+  end
+end, {desc = "[M]onitor outputs"})
 

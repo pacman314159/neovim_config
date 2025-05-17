@@ -1,5 +1,6 @@
 return{
   'neoclide/coc.nvim',
+  enabled = true,
   branch = 'release',
   config = function()
     vim.opt.backup = false

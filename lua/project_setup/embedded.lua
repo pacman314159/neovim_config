@@ -33,24 +33,131 @@ local function config_arduino()
   local project_path = vim.fn.expand("%:p")
   print "Select COM port"
   vim.g.com_number = vim.fn.input "COM <your number>"
-  print "Select board [1]Uno [2]Nano [3]Nano old bootloader [4]Pro_Mini_5V [or something else]"
-  local board = vim.fn.input "Board: "
-  vim.g.serial_baudrate = vim.fn.input "Your serial baudrate"
 
-  if(board == '') then return
-  elseif(board == '1') then
-    board = 'arduino:avr:uno'
-  elseif(board == '2') then
-    board = 'arduino:avr:nano'
-  elseif(board == '3') then
-    board = 'arduino:avr:nano:cpu=atmega328old'
-  elseif(board == '4') then
-    board = 'arduino:avr:pro:cpu=16MHzatmega328'
-  end
+  local full_fqbn
+  -- vim.g.serial_baudrate = vim.fn.input "Your serial baudrate"
 
-  local full_cmd = string.format("arduino-cli board attach -p COM%s -b %s %s -v", vim.g.com_number, board, project_path)
-  vim.cmd("w | FloatermNew --position=topright --autoclose=0 --width=0.3 --height=0.4 "..full_cmd)
+  local board_list = {}
+  local board_name_to_fqbn = {}
+  local board_name, board_fqbn
 
+  local option_names = {}
+  local option_selections = {}
+  local option_fqbns = {}
+  local option_number_of_selections = {}
+  local option_selection, option_fqbn
+  local option_name, old_name = "0", "0"
+  local iterator, counter, num_options = 0, 0, 0
+
+  local flag = false
+
+  -- 1st, select board
+  vim.fn.jobstart("arduino-cli board listall", {
+    stdout_buffered = true, -- Ensures output is captured as a whole
+    on_stdout = function(_, data)
+      for i, line in ipairs(data) do
+        if line ~= "" and i > 1 then -- Skip empty lines and the header (first line)
+          board_name, board_fqbn = line:match("^(.-)%s+([%w_:]+)$")
+          if board_name and board_fqbn then
+            table.insert(board_list, board_name)
+            board_name_to_fqbn[board_name] = board_fqbn
+          end
+        end
+      end
+
+      vim.ui.select(
+        board_list,
+        { prompt = "Select Arduino Board:", format_item = function(item) return item end },
+        function(choice)
+          if choice then
+            board_fqbn = board_name_to_fqbn[choice]
+            full_fqbn = board_fqbn
+            print("Selected Arduino Board FQBN:", board_fqbn)
+
+            -- 2nd, Select multiple board options
+            vim.fn.jobstart("arduino-cli board details -b "..board_fqbn, {
+              stdout_buffered = true,
+              on_stdout = function(_, data)
+                -- Gather all options
+                for i, line in ipairs(data) do
+                  if line:match("^Option:") then
+                    flag = true
+                    num_options = num_options + 1
+                    line = line:gsub("%s+$", "")
+                    option_name = line:match("%S+$")
+                    table.insert(option_names, option_name)
+
+                  elseif line:match("^Programmers:") then
+                    option_number_of_selections[old_name] = counter
+                    break
+
+                  elseif flag then
+                    iterator = iterator + 1
+                    counter = counter + 1
+
+                    if old_name ~= option_name then
+                      option_number_of_selections[old_name] = counter - 1
+                      counter = 1
+                      old_name = option_name
+                    end
+
+                    -- string processing
+                    line = line:gsub("^%s+", ""):gsub("%s+$", "") -- trim whitespaces on 2 ends
+                    option_fqbn = line:match("%S+$") -- extract rightmost substring
+                    line = line:gsub('\x1b%[%d+m', '') -- trim ANSI Escape char
+                    option_fqbn = option_fqbn:gsub('\x1b%[%d+m', '') -- trim ANSI Escape char
+                    line = string.sub(line, 1, -(#option_fqbn + 1))
+                    line = line:gsub("%s+$", "") -- trim trailing whitespaces
+                    if not line:sub(-1):match("[%w%p]") then -- if last char is not number, text, punctuation
+                      line = line:sub(1, -4):gsub("%s+$", "") -- remove last 3 chars and the trailing spaces
+                    end
+                    option_selection = line
+
+                    table.insert(option_selections, option_selection)
+                    table.insert(option_fqbns, option_fqbn)
+                  end
+                end
+
+                -- UI to select
+                local start_pos = 1
+                for option_number, name in ipairs(option_names) do
+                  local indexes = {} for i = 1, option_number_of_selections[name] do indexes[i] = start_pos + i - 1 end
+
+                  if(option_number == num_options) then
+                    vim.ui.select(
+                      indexes,
+                      { prompt = "Select "..name, format_item = function(item) return option_selections[item] end },
+                      function(chosen_index)
+                        if chosen_index then
+                          full_fqbn = full_fqbn..":"..option_fqbns[chosen_index]
+                          print(full_fqbn)
+                          -- local full_cmd = string.format("arduino-cli board attach -p COM%s -b %s %s -v", vim.g.com_number, full_fqbn, project_path)
+                          -- vim.cmd("w | FloatermNew --position=topright --autoclose=0 --width=0.3 --height=0.4 "..full_cmd)
+                        else print("No choice selected") end
+                      end
+                    )
+                    break
+                  end
+
+                  vim.ui.select(
+                    indexes,
+                    { prompt = "Select "..name, format_item = function(item) return option_selections[item] end },
+                    function(chosen_index)
+                      if chosen_index then
+                        full_fqbn = full_fqbn..":"..option_fqbns[chosen_index]
+                      else print("No choice selected") end
+                    end
+                  )
+                  start_pos = start_pos + option_number_of_selections[name]
+                end
+              end
+            })
+
+          else print("No board selected") end
+        end
+      )
+    end,
+  })
   -- local key = vim.api.nvim_replace_termcodes("<Esc><C-h>", true, false, true)
   -- vim.fn.feedkeys(key)
 end
@@ -184,8 +291,26 @@ local function create_esp_project(directory)
   local command5 = "cd ".. project_name
   local command6 = "idf.py set-target "..esp_chip
 
+  -- local project_types = {"arduino", "pico", "cpp", "python", "stm32", "esp_idf"}
+  -- vim.ui.select(
+  --   project_types,
+  --   {
+  --     prompt = "Select:",
+  --     format_item = function(item) return item end
+  --   },
+  --   function(choice)
+  --     if choice then
+  --       print("You selected:", choice)
+  --       vim.g.project_type = choice
+  --     else
+  --       print("No selection made")
+  --     end
+  --   end
+  -- )
+
   local full_cmd = command1.."&&"..command2.."&&"..command3.."&&"..command4.."&&"..command5.."&&"..command6
-  vim.cmd(string.format("FloatermNew!  --name=%s --width=0.7 --height=0.7 %s", vim.g.project_type, full_cmd))
+  print(full_cmd)
+  vim.cmd(string.format("FloatermNew! --name=%s --width=0.7 --height=0.7 %s", vim.g.project_type, full_cmd))
 
   local function open_file()
     local file_path = string.format("%s/%s/main/%s.c", directory, project_name, project_name)

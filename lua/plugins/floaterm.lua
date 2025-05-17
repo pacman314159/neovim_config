@@ -1,5 +1,6 @@
 return {
   'voldikss/vim-floaterm',
+  enabled = true,
   config = function()
     vim.keymap.set("n", "<C-\\>", ":FloatermToggle<CR>", {silent = true})
     vim.keymap.set("t", "<C-\\>", "<C-\\><C-n>:FloatermToggle<CR>", {silent = true})
@@ -9,7 +10,7 @@ return {
     vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]])
 
     vim.g.floaterm_titleposition = "center"
-    -- vim.g.floaterm_shell = "pwsh.exe"
+    vim.g.floaterm_shell = "cmd.exe"
 
     vim.keymap.set("n", "<leader>ftn", function()
       if(vim.g.project_type == "none") then
@@ -22,6 +23,7 @@ return {
     vim.keymap.set("n", "<leader>ftc", ":FloatermKill!<CR>", {desc = "[F]loat[T]erm [C]ollapse", silent = true})
 
     vim.keymap.set("t", "<C-]>", "<C-\\><C-n>:FloatermNext<CR>", {silent = true})
+    vim.keymap.set("t", "<C-[>", "<C-\\><C-n>:FloatermPrev<CR>", {silent = true})
 
     vim.keymap.set("t", "<C-A-Right><C-A-Right>", "<C-\\><C-n>:FloatermUpdate --wintype=vsplit --position=botright --width=0.3<CR>", {silent = true})
     vim.keymap.set("t", "<C-A-Right><C-A-Up>", "<C-\\><C-n>:FloatermUpdate --wintype=float --position=topright --width=0.3 --height=0.4<CR>", {silent = true})

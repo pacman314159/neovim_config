@@ -20,8 +20,10 @@ end, {desc = '[C]onfig [B]ackground', silent = true})
 -- Further movements
 vim.keymap.set({"n", "v"}, "J", "13j", { desc = "Up half page", remap = true })
 vim.keymap.set({"n", "v"}, "K", "13k", { desc = "Down half page", remap = true })
-vim.keymap.set({"n", "v"}, "U", "zz<C-u>", {})
-vim.keymap.set({"n", "v"}, "D", "zz<C-d>", {})
+vim.keymap.set({"n", "v"}, "<C-u>", "<C-u>zz", { desc = "Scroll with cursor middle", remap = true })
+vim.keymap.set({"n", "v"}, "<C-d>", "<C-d>zz", { desc = "Scroll with cursor middle", remap = true })
+-- vim.keymap.set({"n", "v"}, "U", "zz<C-u>", {})
+-- vim.keymap.set({"n", "v"}, "D", "zz<C-d>", {})
 
 -- Commenting codes
 vim.keymap.set({"n"}, "<leader>/", "gcc", {remap = true})
@@ -33,15 +35,15 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = tr
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
-vim.keymap.set("n", "<A-j>", "<C-e>", {desc = "Curl window down", remap = true})
-vim.keymap.set("n", "<A-k>", "<C-y>", {desc = "Curl window up", remap = true})
+vim.keymap.set("n", "<C-S-J>", "<C-e>", {desc = "Curl window down", remap = true})
+vim.keymap.set("n", "<C-S-K>", "<C-y>", {desc = "Curl window up", remap = true})
 
 -- Move Lines
 vim.keymap.set("n", "<C-A-j>", "<cmd>m .+1<cr>==", { desc = "Move Line Down" })
-vim.keymap.set("n", "<C-A-k>", "<cmd>m .-2<cr>==", { desc = "Move Line Up" })
 vim.keymap.set("i", "<C-A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
-vim.keymap.set("i", "<C-A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 vim.keymap.set("v", "<C-A-j>", ":m '>+1<cr>gv=gv", { desc = "Move Whole Thing Down", silent = true })
+vim.keymap.set("n", "<C-A-k>", "<cmd>m .-2<cr>==", { desc = "Move Line Up" })
+vim.keymap.set("i", "<C-A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
 vim.keymap.set("v", "<C-A-k>", ":m '<-2<cr>gv=gv", { desc = "Move Whole Thing Up", silent = true })
 
 -- Resize window using <ctrl> arrow keys

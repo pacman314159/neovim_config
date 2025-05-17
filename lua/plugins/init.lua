@@ -1,39 +1,48 @@
 return {
-  --Theme & Appearance
+  --Themes
   'GlennLeo/cobalt2',
   'ellisonleao/gruvbox.nvim',
   'NLKNguyen/papercolor-theme',
-  'nvim-lualine/lualine.nvim',
-  "b0o/incline.nvim",
   { "rose-pine/neovim", as = "rose-pine" },
   'projekt0n/github-nvim-theme',
   'sainnhe/sonokai',
-  "lukas-reineke/indent-blankline.nvim",
-  'xiyaowong/nvim-transparent',
   'GustavoPrietoP/doom-themes.nvim',
-  'folke/tokyonight.nvim',
-  'nvim-tree/nvim-web-devicons',
-  'akinsho/bufferline.nvim',
   'Mofiqul/vscode.nvim',
   'catppuccin/nvim',
 
-
-  --Funtionalities
-  'lervag/vimtex',
-  'rcarriga/nvim-notify',
+  -- Decorations
+  'nvim-lualine/lualine.nvim',
+  "b0o/incline.nvim",
+  "lukas-reineke/indent-blankline.nvim",
+  'xiyaowong/nvim-transparent',
+  'folke/tokyonight.nvim',
+  'nvim-tree/nvim-web-devicons',
+  'akinsho/bufferline.nvim',
   'hedyhli/outline.nvim',
-  'MunifTanjim/nui.nvim',
-  "folke/noice.nvim",
-  'ggandor/leap.nvim',
-  'voldikss/vim-floaterm',
-  'nvim-tree/nvim-tree.lua',
   'nvim-lua/plenary.nvim',
-  'nvim-telescope/telescope.nvim', tag = '0.1.8',
-  "nvim-telescope/telescope-file-browser.nvim",
-  "windwp/nvim-autopairs",
+
+
+  -- Movements, cursor, coding assistance
   {'nvim-treesitter/nvim-treesitter' , build= ":TSUpdate"},
-  'goolord/alpha-nvim',
+  'ggandor/leap.nvim',
+  "sphamba/smear-cursor.nvim",
+  'nvim-tree/nvim-tree.lua',
+  "windwp/nvim-autopairs",
+  -- 'yetone/avante.nvim',
   {'neoclide/coc.nvim', branch = 'release'},
   'kevinhwang91/promise-async',
   'kevinhwang91/nvim-ufo',
+
+  -- Functionalities with GUI
+  "folke/noice.nvim",
+  'stevearc/dressing.nvim',
+  'MunifTanjim/nui.nvim',
+  'nvim-telescope/telescope.nvim', tag = '0.1.8',
+  "nvim-telescope/telescope-file-browser.nvim",
+  'voldikss/vim-floaterm',
+  'rcarriga/nvim-notify',
+  'goolord/alpha-nvim',
+
+  -- Others
+  -- 'lervag/vimtex',
 }

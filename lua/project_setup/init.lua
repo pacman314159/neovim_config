@@ -5,7 +5,7 @@ local embedded = require "project_setup.embedded"
 
 -- ---- COMMANDS ----------------------------------------------------------------------------------------------
 vim.api.nvim_create_user_command("SelectProjectType", function()
-  local project_types = {"arduino", "pico", "c", "cpp", "python", "stm32", "esp_idf"}
+  local project_types = {"arduino", "pico", "c", "cpp", "python", "stm32", "esp_idf", "pio"}
   local co = coroutine.running()
   vim.ui.select(
     project_types,
@@ -22,42 +22,6 @@ vim.api.nvim_create_user_command("SelectProjectType", function()
       end
     end
   )
-end, {})
-
-vim.api.nvim_create_user_command("TestSelectBoard", function()
-  vim.fn.jobstart("arduino-cli board listall", {
-    stdout_buffered = true, -- Ensures output is captured as a whole
-    on_stdout = function(_, data)
-      local boards = {}
-      local board_map = {}
-
-      for i, line in ipairs(data) do
-        -- Skip empty lines and the header (first line)
-        if line ~= "" and i > 1 then
-          -- Separate Board Name and FQBN
-          local board_name, fqbn = line:match("^(.-)%s+([%w_:]+)$")
-          if board_name and fqbn then
-            table.insert(boards, board_name)
-            board_map[board_name] = fqbn
-          end
-        end
-      end
-
-      vim.ui.select(
-        boards,
-        { prompt = "Select Arduino Board:", format_item = function(item) return item end },
-        function(choice)
-          if choice then
-            local selected_fqbn = board_map[choice] -- Retrieve the FQBN
-            vim.g.selected_arduino_board = selected_fqbn -- Store the FQBN globally
-            print("Selected Arduino Board FQBN:", selected_fqbn) -- Print the selected FQBN
-          else
-            print("No board selected")
-          end
-        end
-      )
-    end,
-  })
 end, {})
 
 vim.api.nvim_create_user_command("ConfigureBoard", function()

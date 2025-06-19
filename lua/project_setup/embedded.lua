@@ -130,10 +130,10 @@ local function config_arduino()
                       function(chosen_index)
                         if chosen_index then
                           full_fqbn = full_fqbn..":"..option_fqbns[chosen_index]
-                          print(full_fqbn)
-                          -- local full_cmd = string.format("arduino-cli board attach -p COM%s -b %s %s -v", vim.g.com_number, full_fqbn, project_path)
-                          -- vim.cmd("w | FloatermNew --position=topright --autoclose=0 --width=0.3 --height=0.4 "..full_cmd)
                         else print("No choice selected") end
+                        -- Final execution
+                        local full_cmd = string.format("arduino-cli board attach -p COM%s -b %s %s -v", vim.g.com_number, full_fqbn, project_path)
+                        vim.cmd("w | FloatermNew --position=topright --autoclose=0 --width=0.3 --height=0.4 "..full_cmd)
                       end
                     )
                     break

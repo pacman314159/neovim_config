@@ -7,8 +7,8 @@ return {
 
     local dashboard = require('alpha.themes.dashboard')
     dashboard.section.buttons.val = {
-      dashboard.button( "q", "❌  Quit NVIM" , ":qa<CR>"),
-      dashboard.button("n", "🔨  Create new project", ":NewProject<CR>"),
+      dashboard.button( "x", "❌  Quit NVIM" , ":qa<CR>"),
+      dashboard.button("n", "🔨  Create Platform IO project", ":Pioinit<CR>"),
 
       dashboard.button("",""), -- For some spacing
 

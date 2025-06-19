@@ -13,7 +13,7 @@ return {
     vim.keymap.set("n", "<leader>vc", function()
       builtin.find_files{cwd = vim.fn.stdpath 'config'}
     end, {desc = 'Open [V]im [C]onfig'})
-    -- Change colorscheme
+    -- Change colorschem
     vim.keymap.set("n", "<leader>cs", ":Telescope colorscheme<CR>", {desc = "[C]olor[S]cheme", silent = true})
     --
     -- require('telescope').setup({

@@ -34,6 +34,7 @@ return {
   'kevinhwang91/nvim-ufo',
 
   -- Functionalities with GUI
+  "lervag/vimtex",
   "folke/noice.nvim",
   'stevearc/dressing.nvim',
   'MunifTanjim/nui.nvim',

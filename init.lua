@@ -34,7 +34,7 @@ vim.cmd[[set background=dark]] vim.g.theme = 'dark'
 
 -- vim.cmd[[colorscheme vscode]]
 -- vim.cmd([[colorscheme catppuccin-latte]])
-vim.cmd([[colorscheme catppuccin]])
+-- vim.cmd([[colorscheme catppuccin]])
 -- vim.cmd([[colorscheme doom-dracula]])
 -- vim.cmd([[colorscheme catppuccin-macchiato]])
 -- vim.cmd[[colorscheme github_dark]]
@@ -50,13 +50,13 @@ vim.cmd([[colorscheme catppuccin]])
 -- vim.cmd[[colorscheme doom-dark+]]
 -- vim.cmd[[colorscheme doom-challenger-deep]]
 -- vim.cmd[[colorscheme doom-oceanic-next]]
--- vim.cmd[[colorscheme sonokai]]
+vim.cmd[[colorscheme sonokai]]
 
 require("keymaps")
 require("autocmds")
 require("utils")
 require('lazy_load')
-require("project_setup")
+require("platformio")
 
 if vim.g.neovide then
   print(vim.g.neovide_version)

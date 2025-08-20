@@ -1,7 +1,6 @@
-local utils = require("platformio.utils")
-local M = {}
+local utils = require("project_setup.platformio.utils")
 
-function M.piocmd(cmd_table)
+function piocmd(cmd_table)
   if not utils.pio_install_check() then
     return
   end
@@ -14,8 +13,8 @@ function M.piocmd(cmd_table)
       cmd = cmd .. " " .. v
     end
     local command = cmd .. utils.extra
-    vim.cmd(string.format("FloatermNew --width=0.7 --height=0.7 %s", command))
+    utils.open_floaterm(command)
   end
 end
 
-return M
+return piocmd

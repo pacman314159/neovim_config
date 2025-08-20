@@ -1,6 +1,5 @@
 return {
   --Themes
-  'GlennLeo/cobalt2',
   'ellisonleao/gruvbox.nvim',
   'NLKNguyen/papercolor-theme',
   { "rose-pine/neovim", as = "rose-pine" },
@@ -34,7 +33,6 @@ return {
   'kevinhwang91/nvim-ufo',
 
   -- Functionalities with GUI
-  "lervag/vimtex",
   "folke/noice.nvim",
   'stevearc/dressing.nvim',
   'MunifTanjim/nui.nvim',
@@ -43,6 +41,7 @@ return {
   'voldikss/vim-floaterm',
   'rcarriga/nvim-notify',
   'goolord/alpha-nvim',
+  -- 'code-biscuits/nvim-biscuits',
 
   -- Others
   -- 'lervag/vimtex',

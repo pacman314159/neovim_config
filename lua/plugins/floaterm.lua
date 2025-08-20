@@ -11,12 +11,14 @@ return {
 
     vim.g.floaterm_titleposition = "center"
     vim.g.floaterm_shell = "cmd.exe"
+    vim.g.floaterm_width = 0.8
+    vim.g.floaterm_height = 0.8
 
     vim.keymap.set("n", "<leader>ftn", function()
       if(vim.g.project_type == "none") then
-        vim.cmd("FloatermNew! --width=0.7 --height=0.7")
+        vim.cmd("FloatermNew! --width=0.8 --height=0.8")
       else
-        vim.cmd(string.format("FloatermNew --width=0.7 --height=0.7 --name=%s ", vim.g.project_type))
+        vim.cmd(string.format("FloatermNew --width=0.8 --height=0.8 --name=%s ", vim.g.project_type))
       end
     end, {desc = "[F]loat[T]erm [N]ew", silent = true})
 
@@ -29,7 +31,7 @@ return {
     vim.keymap.set("t", "<C-A-Right><C-A-Up>", "<C-\\><C-n>:FloatermUpdate --wintype=float --position=topright --width=0.3 --height=0.4<CR>", {silent = true})
     vim.keymap.set("t", "<C-A-Right><C-A-Down>", "<C-\\><C-n>:FloatermUpdate --wintype=float --position=bottomright --width=0.3 --height=0.4<CR>", {silent = true})
     vim.keymap.set("t", "<C-A-Down>", "<C-\\><C-n>:FloatermUpdate --wintype=split --position=botright --height=0.4 --width=0.99<CR>", {silent = true})
-    vim.keymap.set("t", "<C-A-Left>", "<C-\\><C-n>:FloatermUpdate --wintype=float --position=center --height=0.7 --width=0.7<CR>", {silent = true})
+    vim.keymap.set("t", "<C-A-Left>", "<C-\\><C-n>:FloatermUpdate --wintype=float --position=center --height=0.8 --width=0.8<CR>", {silent = true})
 
     vim.api.nvim_set_hl(0, "Floaterm", { bg = "none" })
     vim.api.nvim_set_hl(0, "FloatermBorder", { bg = "none" })

@@ -21,6 +21,10 @@ local platformio = vim.api.nvim_create_augroup('platformio', { clear = true })
 local is_windows = jit.os == 'Windows'
 --
 M.devNul = is_windows and ' 2>./nul' or ' 2>/dev/null'
+
+function M.open_floaterm(command)
+  vim.cmd(string.format('FloatermNew! --width=0.8 --height=0.8 %s', command))
+end
 ----------------------------------------------------------------------------------------
 
 local paths = { '.', '..', pathmul(1), pathmul(2), pathmul(3), pathmul(4), pathmul(5) }

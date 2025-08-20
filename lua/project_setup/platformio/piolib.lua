@@ -1,6 +1,4 @@
-local M = {}
-
-local config = require('platformio').config
+local config = require('project_setup.platformio.setup').config
 local curl = require 'plenary.curl'
 
 local pickers = require 'telescope.pickers'
@@ -10,7 +8,7 @@ local make_entry = require 'telescope.make_entry'
 local conf = require('telescope.config').values
 local actions = require 'telescope.actions'
 local action_state = require 'telescope.actions.state'
-local utils = require 'platformio.utils'
+local utils = require 'project_setup.platformio.utils'
 local previewers = require 'telescope.previewers'
 
 local libentry_maker = function(opts)
@@ -61,7 +59,7 @@ local function pick_library(json_data)
           local pkg_name = selection['value']['owner'] .. '/' .. selection['value']['name']
           -- Run compiledb targets after installing library to environments declared in “platformio.ini”
           local command = 'pio pkg install --library "' .. pkg_name .. '" && pio project init --ide=vim' .. (config.lsp == 'clangd' and ' && pio run -t compiledb ' or '') .. utils.extra
-          vim.cmd(string.format("!FloatermNew --width=0.7 --height=0.7 %s", command))
+          utils.open_floaterm(command)
         end)
         return true
       end,
@@ -86,7 +84,7 @@ local function pick_library(json_data)
     :find()
 end
 
-function M.piolib(lib_arg_list)
+function piolib(lib_arg_list)
   if not utils.pio_install_check() then
     return
   end
@@ -123,4 +121,4 @@ function M.piolib(lib_arg_list)
   end
 end
 
-return M
+return piolib

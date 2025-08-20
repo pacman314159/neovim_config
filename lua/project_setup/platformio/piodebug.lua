@@ -1,7 +1,6 @@
-local utils = require("platformio.utils")
-local M = {}
+local utils = require("project_setup.platformio.utils")
 
-function M.piodebug(args_table)
+function piodebug(args_table)
   if not utils.pio_install_check() then
     return
   end
@@ -9,7 +8,7 @@ function M.piodebug(args_table)
   utils.cd_pioini()
 
   local command = string.format("pio debug --interface=gdb -- -x .pioinit %s", utils.extra)
-  vim.cmd(string.format("FloatermNew! --width=0.7 --height=0.7 %s", command))
+  utils.open_floaterm(command)
 end
 
-return M
+return piodebug

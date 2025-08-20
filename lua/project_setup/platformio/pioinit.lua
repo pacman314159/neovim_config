@@ -1,5 +1,3 @@
-local M = {}
-
 local pickers = require 'telescope.pickers'
 local finders = require 'telescope.finders'
 local telescope_conf = require('telescope.config').values
@@ -7,9 +5,9 @@ local actions = require 'telescope.actions'
 local action_state = require 'telescope.actions.state'
 local entry_display = require 'telescope.pickers.entry_display'
 local make_entry = require 'telescope.make_entry'
-local utils = require 'platformio.utils'
+local utils = require 'project_setup.platformio.utils'
 local previewers = require 'telescope.previewers'
-local config = require('platformio').config
+local config = require('project_setup.platformio.setup').config
 
 local boardentry_maker = function(opts)
   local displayer = entry_display.create {
@@ -64,8 +62,7 @@ local function pick_framework(board_details)
             .. '"'
             .. (config.lsp == 'clangd' and ' && pio run -t compiledb ' or '')
             .. utils.extra
-          -- utils.ToggleTerminal(command, 'float')
-          vim.cmd(string.format("FloatermNew --width=0.7 --height=0.7 %s", command))
+          utils.open_floaterm(command)
         end)
         return true
       end,
@@ -111,7 +108,7 @@ local function pick_board(json_data)
     :find()
 end
 
-function M.pioinit()
+function pioinit()
   if not utils.pio_install_check() then
     return
   end
@@ -142,4 +139,4 @@ function M.pioinit()
   pick_board(json_data)
 end
 
-return M
+return pioinit

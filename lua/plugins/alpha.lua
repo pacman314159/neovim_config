@@ -4,10 +4,9 @@ return {
   -- dependencies = { 'echasnovski/mini.icons' },
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
-
     local dashboard = require('alpha.themes.dashboard')
     dashboard.section.buttons.val = {
-      dashboard.button( "x", "❌  Quit NVIM" , ":qa<CR>"),
+      dashboard.button("x", "❌  Quit NVIM" , ":qa<CR>"),
       dashboard.button("n", "🔨  Create Platform IO project", ":Pioinit<CR>"),
 
       dashboard.button("",""), -- For some spacing
@@ -24,17 +23,16 @@ return {
 
       dashboard.button("",""), -- For some spacing
 
-      -- dashboard.button("SPC f o", "💾  Recently opened files"),
-      -- dashboard.button("SPC v c", "⚙  Vim config"),
-      -- dashboard.button("SPC c s", "🖍️  Change coloscheme"),
-
       dashboard.button("o", "💾  Recently opened files", ":silent Telescope oldfiles<CR>"),
       dashboard.button("c", "⚙   Vim config", ":silent Telescope find_files cwd=C:/Users/Admin/AppData/Local/nvim<CR>"),
       dashboard.button("w", "⚙   Wezterm config", ":silent e C:/Users/Admin/.wezterm.lua<CR>"),
       dashboard.button("s", "🗑️   Delete shada (files history)", ":!del C:\\Users\\Admin\\AppData\\Local\\nvim-data\\shada /Q<CR>"),
       dashboard.button("t", "🖍️   Change theme", ":silent Telescope colorscheme<CR>"),
     }
-    require'alpha'.setup(dashboard.config)
+
+    if vim.fn.argc() == 0 then
+      require'alpha'.setup(dashboard.config)
+    end
   end,
 }
 

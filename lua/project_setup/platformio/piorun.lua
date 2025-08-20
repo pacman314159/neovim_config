@@ -1,48 +1,54 @@
-local M = {}
+local utils = require 'project_setup.platformio.utils'
 
-local utils = require 'platformio.utils'
-
-function M.piobuild()
+function piobuild()
   utils.cd_pioini()
   local command = 'pio run' .. utils.extra
-  vim.cmd(string.format("FloatermNew --width=0.7 --height=0.7 %s", command))
+  utils.open_floaterm(command)
 end
 
-function M.pioupload()
+function pioupload()
   utils.cd_pioini()
   local command = 'pio run --target upload' .. utils.extra
-  vim.cmd(string.format("FloatermNew --width=0.7 --height=0.7 %s", command))
+  utils.open_floaterm(command)
 end
 
-function M.piouploadfs()
+function piouploadmonitor()
+  utils.cd_pioini()
+  local command = 'pio run --target upload & device monitor' .. utils.extra
+  utils.open_floaterm(command)
+end
+
+function piouploadfs()
   utils.cd_pioini()
   local command = 'pio run --target uploadfs' .. utils.extra
-  vim.cmd(string.format("FloatermNew --width=0.7 --height=0.7 %s", command))
+  utils.open_floaterm(command)
 end
 
-function M.pioclean()
+function pioclean()
   utils.cd_pioini()
   local command = 'pio run --target clean' .. utils.extra
-  vim.cmd(string.format("FloatermNew --width=0.7 --height=0.7 %s", command))
+  utils.open_floaterm(command)
 end
 
-function M.piorun(arg_table)
+function piorun(arg_table)
   if not utils.pio_install_check() then
     return
   end
   if arg_table[1] == '' then
-    M.pioupload()
+    pioupload()
   elseif arg_table[1] == 'upload' then
-    M.pioupload()
+    pioupload()
   elseif arg_table[1] == 'uploadfs' then
-    M.piouploadfs()
+    piouploadfs()
   elseif arg_table[1] == 'build' then
-    M.piobuild()
+    piobuild()
   elseif arg_table[1] == 'clean' then
-    M.pioclean()
+    pioclean()
+  elseif arg_table[1] == 'uploadmon' then
+    piouploadmonitor()
   else
     vim.notify('Invalid argument: build, upload, uploadfs or clean', vim.log.levels.WARN)
   end
 end
 
-return M
+return piorun

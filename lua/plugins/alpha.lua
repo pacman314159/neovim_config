@@ -23,7 +23,29 @@ return {
 
       dashboard.button("",""), -- For some spacing
 
-      dashboard.button("o", "💾  Recently opened files", ":silent Telescope oldfiles<CR>"),
+      dashboard.button("o", "💾  Recently opened files", function()
+        local builtin = require('telescope.builtin')
+        if vim.g.oldfiles_first_time then -- ensure CD into the file in first open
+          builtin.oldfiles({
+            attach_mappings = function(prompt_bufnr, map)
+              local actions = require('telescope.actions')
+              local function new_action(bufnr)
+                local selection = require('telescope.actions.state').get_selected_entry()
+                actions.close(bufnr)
+                vim.cmd.edit(selection.path)
+                vim.cmd.lcd(vim.fn.fnamemodify(selection.path, ':h'))
+                vim.g.oldfiles_first_time = false
+              end
+              map('i', '<cr>', new_action)
+              map('n', '<cr>', new_action)
+              return true
+            end,
+          })
+        else
+          builtin.oldfiles()
+        end
+      end),
+
       dashboard.button("c", "⚙   Vim config", ":silent Telescope find_files cwd=C:/Users/Admin/AppData/Local/nvim<CR>"),
       dashboard.button("w", "⚙   Wezterm config", ":silent e C:/Users/Admin/.wezterm.lua<CR>"),
       dashboard.button("s", "🗑️   Delete shada (files history)", ":!del C:\\Users\\Admin\\AppData\\Local\\nvim-data\\shada /Q<CR>"),

@@ -1,30 +1,31 @@
 return {
   --Themes
-  'ellisonleao/gruvbox.nvim',
-  'NLKNguyen/papercolor-theme',
+  -- 'ellisonleao/gruvbox.nvim',
+  -- 'NLKNguyen/papercolor-theme',
   { "rose-pine/neovim", as = "rose-pine" },
-  'projekt0n/github-nvim-theme',
-  'sainnhe/sonokai',
+  -- 'projekt0n/github-nvim-theme',
+  -- 'sainnhe/sonokai',
   'GustavoPrietoP/doom-themes.nvim',
-  'Mofiqul/vscode.nvim',
+  -- 'Mofiqul/vscode.nvim',
   'catppuccin/nvim',
 
   -- Decorations
   'nvim-lualine/lualine.nvim',
   "b0o/incline.nvim",
   "lukas-reineke/indent-blankline.nvim",
-  'xiyaowong/nvim-transparent',
   'folke/tokyonight.nvim',
   'nvim-tree/nvim-web-devicons',
   'akinsho/bufferline.nvim',
   'hedyhli/outline.nvim',
   'nvim-lua/plenary.nvim',
+  'xiyaowong/nvim-transparent',
 
 
   -- Movements, cursor, coding assistance
   {'nvim-treesitter/nvim-treesitter' , build= ":TSUpdate"},
   'ggandor/leap.nvim',
-  "sphamba/smear-cursor.nvim",
+  -- "sphamba/smear-cursor.nvim",
+  -- 'ThePrimeagen/harpoon',
   'nvim-tree/nvim-tree.lua',
   "windwp/nvim-autopairs",
   -- 'yetone/avante.nvim',

@@ -1,6 +1,7 @@
 return {
   'nvim-tree/nvim-web-devicons',
   enabled = true,
+  cmd = 'NvimTreeToggle',
   config = function()
 
     vim.g.loaded_netrw = 1

@@ -1,3 +1,5 @@
+vim.loader.enable()
+
 local global = vim.g
 local o = vim.o
 local opt = vim.opt
@@ -40,12 +42,12 @@ vim.cmd[[set background=dark]] vim.g.theme = 'dark'
 -- vim.cmd[[colorscheme github_dark]]
 -- vim.cmd[[colorscheme github_light]]
 -- vim.cmd[[colorscheme tokyonight]]
-vim.cmd[[colorscheme tokyonight-day]]
+-- vim.cmd[[colorscheme tokyonight-day]]
 -- vim.cmd[[colorscheme PaperColor]]
 -- vim.cmd[[colorscheme rose-pine-moon]]
 -- vim.cmd[[colorscheme rose-pine]]
 -- vim.cmd[[colorscheme doom-moonlight]]
--- vim.cmd[[colorscheme doom-gruvbox]]
+vim.cmd[[colorscheme doom-gruvbox]]
 -- vim.cmd[[colorscheme doom-molokai]]
 -- vim.cmd[[colorscheme doom-horizon]]
 -- vim.cmd[[colorscheme doom-dark+]]

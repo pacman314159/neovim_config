@@ -20,10 +20,13 @@ end, {desc = '[C]onfig [B]ackground', silent = true})
 -- Further movements
 vim.keymap.set({"n", "v"}, "J", "13j", { desc = "Up half page", remap = true })
 vim.keymap.set({"n", "v"}, "K", "13k", { desc = "Down half page", remap = true })
-vim.keymap.set({"n", "v"}, "<C-u>", "<C-u>zz", { desc = "Scroll with cursor middle", remap = true })
-vim.keymap.set({"n", "v"}, "<C-d>", "<C-d>zz", { desc = "Scroll with cursor middle", remap = true })
+vim.keymap.set({"n", "v"}, "<A-k>", "<C-u>zz", { desc = "Scroll with cursor middle", remap = true })
+vim.keymap.set({"n", "v"}, "<A-j>", "<C-d>zz", { desc = "Scroll with cursor middle", remap = true })
 -- vim.keymap.set({"n", "v"}, "U", "zz<C-u>", {})
 -- vim.keymap.set({"n", "v"}, "D", "zz<C-d>", {})
+
+-- Re-center
+vim.keymap.set("n", "q", "zz", { desc = "Re-center", remap = true })
 
 -- Commenting codes
 vim.keymap.set({"n"}, "<leader>/", "gcc", {remap = true})
@@ -35,8 +38,8 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = tr
 vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 
-vim.keymap.set("n", "<C-S-J>", "<C-e>", {desc = "Curl window down", remap = true})
-vim.keymap.set("n", "<C-S-K>", "<C-y>", {desc = "Curl window up", remap = true})
+vim.keymap.set("n", "<C-e>", "<C-e>zz", {desc = "Curl window down", remap = true})
+vim.keymap.set("n", "<C-y>", "<C-y>zz", {desc = "Curl window up", remap = true})
 
 -- Move Lines
 vim.keymap.set("n", "<C-A-j>", "<cmd>m .+1<cr>==", { desc = "Move Line Down" })
@@ -52,11 +55,14 @@ vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window 
 vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
--- Move between tabs and buffers
-vim.keymap.set("n", "<Tab>", ":tabnext<CR>", {desc = "Next Tab", remap = true, silent = true})
-vim.keymap.set("n", "<S-Tab>", ":tabprevious<CR>", {desc = "Next Tab", remap = true, silent = true})
-vim.keymap.set("n", "\\", ":bnext<CR>", {desc = "Next buffer", remap = true, silent = true})
-vim.keymap.set("n", "|", ":bprevious<CR>", {desc = "Previous Buffer", remap = true, silent = true})
+-- Move between tabs, move tabs positions
+-- vim.keymap.set("n", "<Tab>", ":tabnext<CR>", {desc = "Next Tab", remap = true, silent = true})
+-- vim.keymap.set("n", "<S-Tab>", ":tabprevious<CR>", {desc = "Next Tab", remap = true, silent = true})
+vim.keymap.set("n", "<A-l>", ":tabnext<CR>", {desc = "Next Tab", remap = true, silent = true})
+vim.keymap.set("n", "<A-h>", ":tabprevious<CR>", {desc = "Next Tab", remap = true, silent = true})
+vim.keymap.set("n", "<A-L>", ":tabmove +1<CR>", {desc = "Next Tab", remap = true, silent = true})
+vim.keymap.set("n", "<A-H>", ":tabmove -1<CR>", {desc = "Next Tab", remap = true, silent = true})
+
 -- Folds
 vim.keymap.set("n", "t", "za", {desc = "toggle fold", remap = true})
 
@@ -72,6 +78,6 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Escpate to Normal mode fro
 
 -- Easier frequently-used commands
 vim.keymap.set("n", "<leader>x", ":x<CR>", {silent = true})
-vim.keymap.set("n", "<leader>X", ":wqa!<CR>", {desc = "write all files then exit", silent = true})
+vim.keymap.set("n", "<leader><S-x>", ":wqa!<CR>", {desc = "write all files then exit", silent = true})
 vim.keymap.set("n", "<leader>q", ":q<CR>", {silent = true})
 vim.keymap.set("n", "<leader>w", ":w<CR>", {silent = true})

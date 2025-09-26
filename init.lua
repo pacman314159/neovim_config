@@ -4,6 +4,7 @@ local global = vim.g
 local o = vim.o
 local opt = vim.opt
 
+global.python3_host_prog = "C:/Users/Admin/.virtualenvs/neovim/Scripts/python.exe"
 global.mapleader = ' '
 global.maplocalleader = " "
 

@@ -3,6 +3,7 @@ local embedded = require"project_setup.platformio"
 
 vim.g.project_types = {
   "Platform IO",
+  "Python Notebook",
   "Python",
   "C",
   "C++",
@@ -65,9 +66,9 @@ vim.keymap.set("n", "<leader>m", function()
   end
 end, {desc = "[M]onitor outputs"})
 
--- vim.keymap.set("n", "<ldeader>um", function()
---   if vim.g.project_type == "Platform IO" then
---     embedded.piomon({'uploadmon'})
---   end
--- end, {desc = "[U]pload [M]onitor"})
+vim.keymap.set("n", "<leader>um", function()
+  if vim.g.project_type == "Platform IO" then
+    embedded.piorun({'uploadmon'})
+  end
+end, {desc = "[U]pload [M]onitor"})
 

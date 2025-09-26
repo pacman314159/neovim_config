@@ -48,6 +48,7 @@ return {
 
       dashboard.button("c", "⚙   Vim config", ":silent Telescope find_files cwd=C:/Users/Admin/AppData/Local/nvim<CR>"),
       dashboard.button("w", "⚙   Wezterm config", ":silent e C:/Users/Admin/.wezterm.lua<CR>"),
+      dashboard.button("h", "⚙   O[h] My Posh config", ":silent e C:/Users/Admin/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1<CR>"),
       dashboard.button("s", "🗑️   Delete shada (files history)", ":!del C:\\Users\\Admin\\AppData\\Local\\nvim-data\\shada /Q<CR>"),
       dashboard.button("t", "🖍️   Change theme", ":silent Telescope colorscheme<CR>"),
     }

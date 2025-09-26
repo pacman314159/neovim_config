@@ -4,11 +4,12 @@ return {
   dependencies = { 'nvim-lua/plenary.nvim' },
   config = function()
     local builtin = require('telescope.builtin')
+
     vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
     vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
     -- vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
     vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
-        vim.g.oldfiles_first_time = true
+    vim.g.oldfiles_first_time = true
     vim.keymap.set('n', '<leader>fo', function()
       if vim.g.oldfiles_first_time then -- ensure CD into the file in first open
         builtin.oldfiles({
@@ -38,13 +39,13 @@ return {
     vim.keymap.set("n", "<leader>cs", ":Telescope colorscheme<CR>", {desc = "[C]olor[S]cheme", silent = true})
     --
     -- require('telescope').setup({
-      --     defaults = {
-        --       layout_strategy = 'vertical',
-        --       layout_config = { height = 0.95 },
-        --     },
-        -- })
+    --     defaults = {
+    --       layout_strategy = 'vertical',
+    --       layout_config = { height = 0.95 },
+    --     },
+    -- })
 
-        vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none" })
-        vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none" })
-    end
+    vim.api.nvim_set_hl(0, "TelescopeBorder", { bg = "none" })
+    vim.api.nvim_set_hl(0, "TelescopePromptBorder", { bg = "none" })
+  end
 }

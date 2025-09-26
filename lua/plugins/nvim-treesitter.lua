@@ -17,6 +17,7 @@ return {
         "lua",
         "vim",
         "markdown",
+        "python",
       },
     })
     require 'nvim-treesitter.install'.compilers = { "clang", "gcc" }

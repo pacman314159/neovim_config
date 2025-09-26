@@ -10,7 +10,8 @@ return {
     vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]])
 
     vim.g.floaterm_titleposition = "center"
-    vim.g.floaterm_shell = "cmd.exe"
+    -- vim.g.floaterm_shell = "cmd.exe"
+    vim.g.floaterm_shell = "powershell.exe"
     vim.g.floaterm_width = 0.8
     vim.g.floaterm_height = 0.8
 

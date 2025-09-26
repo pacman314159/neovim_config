@@ -12,14 +12,15 @@ return {
         'EndOfBuffer',
       },
       extra_groups = {
-        'TelescopeNormal', 
-        'TelescopeBorder', 'TelescopePromptBorder',
+        -- UI plugins
+        'TelescopeNormal', 'TelescopeBorder', 'TelescopePromptBorder',
         'FloatermBorder',
+
+        -- Bufferline support
+        "BufferLineTabClose", "BufferlineBufferSelected", "BufferLineFill",
+        "BufferLineBackground", "BufferLineSeparator", "BufferLineIndicatorSelected",
       },
-      exclude_groups = {
-        'LineNr',
-      }
+      exclude_groups = { 'LineNr' },
     })
-    require('transparent').clear_prefix('BufferLine')
   end
 }

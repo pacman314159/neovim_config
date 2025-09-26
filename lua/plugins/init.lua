@@ -11,7 +11,7 @@ return {
 
   -- Decorations
   'nvim-lualine/lualine.nvim',
-  "b0o/incline.nvim",
+  -- "b0o/incline.nvim",
   "lukas-reineke/indent-blankline.nvim",
   'folke/tokyonight.nvim',
   'nvim-tree/nvim-web-devicons',
@@ -22,13 +22,11 @@ return {
 
 
   -- Movements, cursor, coding assistance
-  {'nvim-treesitter/nvim-treesitter' , build= ":TSUpdate"},
+  {'nvim-treesitter/nvim-treesitter'},
   'ggandor/leap.nvim',
   -- "sphamba/smear-cursor.nvim",
-  -- 'ThePrimeagen/harpoon',
   'nvim-tree/nvim-tree.lua',
   "windwp/nvim-autopairs",
-  -- 'yetone/avante.nvim',
   {'neoclide/coc.nvim', branch = 'release'},
   'kevinhwang91/promise-async',
   'kevinhwang91/nvim-ufo',
@@ -42,7 +40,11 @@ return {
   'voldikss/vim-floaterm',
   'rcarriga/nvim-notify',
   'goolord/alpha-nvim',
-  -- 'code-biscuits/nvim-biscuits',
+  'willothy/wezterm.nvim',
+  
+  -- Python Notebooks
+  -- "benlubas/molten-nvim",
+  "goerz/jupytext.nvim",
 
   -- Others
   -- 'lervag/vimtex',

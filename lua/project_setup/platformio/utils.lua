@@ -1,7 +1,9 @@
 local M = {}
 
 -- M.extra = 'printf \"\\\\n\\\\033[0;33mPlease Press ENTER to continue \\\\033[0m\"; read'
-M.extra = ' && echo . && echo . && echo Please Press ENTER to continue'
+-- M.extra = ' && echo . && echo . && echo Please Press ENTER to continue'
+-- M.extra = ' ; echo . ; echo . ; echo Please Press ENTER to continue'
+M.extra = ''
 
 function M.strsplit(inputstr, del)
   local t = {}

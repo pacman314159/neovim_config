@@ -80,4 +80,5 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Escpate to Normal mode fro
 vim.keymap.set("n", "<leader>x", ":x<CR>", {silent = true})
 vim.keymap.set("n", "<leader><S-x>", ":wqa!<CR>", {desc = "write all files then exit", silent = true})
 vim.keymap.set("n", "<leader>q", ":q<CR>", {silent = true})
+vim.keymap.set("n", "<leader><S-Q>", ":qall!<CR>", {silent = true})
 vim.keymap.set("n", "<leader>w", ":w<CR>", {silent = true})

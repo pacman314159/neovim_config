@@ -37,7 +37,7 @@ vim.cmd[[set background=dark]] vim.g.theme = 'dark'
 
 -- vim.cmd[[colorscheme vscode]]
 -- vim.cmd([[colorscheme catppuccin-latte]])
--- vim.cmd([[colorscheme catppuccin]])
+vim.cmd([[colorscheme catppuccin]])
 -- vim.cmd([[colorscheme doom-dracula]])
 -- vim.cmd([[colorscheme catppuccin-macchiato]])
 -- vim.cmd[[colorscheme github_dark]]
@@ -48,7 +48,7 @@ vim.cmd[[set background=dark]] vim.g.theme = 'dark'
 -- vim.cmd[[colorscheme rose-pine-moon]]
 -- vim.cmd[[colorscheme rose-pine]]
 -- vim.cmd[[colorscheme doom-moonlight]]
-vim.cmd[[colorscheme doom-gruvbox]]
+-- vim.cmd[[colorscheme doom-gruvbox]]
 -- vim.cmd[[colorscheme doom-molokai]]
 -- vim.cmd[[colorscheme doom-horizon]]
 -- vim.cmd[[colorscheme doom-dark+]]

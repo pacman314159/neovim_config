@@ -1,4 +1,4 @@
 return {
-  "goerz/jupytext.nvim",
+  'goerz/jupytext.nvim', 
   enabled = false,
 }

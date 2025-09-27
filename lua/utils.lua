@@ -6,8 +6,3 @@ vim.api.nvim_create_user_command("Google", function()
   local open_cmd = "!start"
   vim.cmd(open_cmd .. " " .. url)
 end, {})
-
--- vim.api.nvim_create_user_command("MoltenVenvInit", function()
---   vim.g.python3_host_prog = "C:/Users/Admin/.virtualenvs/neovim/Scripts/python.exe"
---   vim.cmd("MoltenInit neovim")
--- end, { desc = "Initialize Molten with current virtualenv" })

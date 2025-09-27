@@ -20,6 +20,10 @@ return {
   'nvim-lua/plenary.nvim',
   'xiyaowong/nvim-transparent',
 
+  -- Language Server Protocol
+  -- "neovim/nvim-lspconfig",
+  {'neoclide/coc.nvim', branch = 'release'},
+
 
   -- Movements, cursor, coding assistance
   {'nvim-treesitter/nvim-treesitter'},
@@ -27,7 +31,6 @@ return {
   -- "sphamba/smear-cursor.nvim",
   'nvim-tree/nvim-tree.lua',
   "windwp/nvim-autopairs",
-  {'neoclide/coc.nvim', branch = 'release'},
   'kevinhwang91/promise-async',
   'kevinhwang91/nvim-ufo',
 
@@ -43,9 +46,5 @@ return {
   'willothy/wezterm.nvim',
   
   -- Python Notebooks
-  -- "benlubas/molten-nvim",
-  "goerz/jupytext.nvim",
-
-  -- Others
-  -- 'lervag/vimtex',
+  'Vigemus/iron.nvim',
 }
